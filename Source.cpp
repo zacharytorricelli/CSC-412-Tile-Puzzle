@@ -237,7 +237,7 @@ int main()
 					// Stops the timer
 					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
-					cout << "1. \t" << initialState << endl;
+					cout << "1. \t" << initialState << endl << endl;
 
 					// Displays the depth and node count to the console
 					cout << "Depth: " << finalDepth << endl;
@@ -291,7 +291,7 @@ int main()
 					// Stops the timer
 					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
-					cout << "1. \t" << initialState << endl;
+					cout << "1. \t" << initialState << endl << endl;
 
 					// Displays the depth and node count to the console
 					cout << "Depth: " << finalDepth << endl;
@@ -345,7 +345,7 @@ int main()
 					// Stops the timer
 					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
-					cout << "1. \t" << initialState << endl;
+					cout << "1. \t" << initialState << endl << endl;
 
 					// Displays the depth and node count to the console
 					cout << "Depth: " << finalDepth << endl;
