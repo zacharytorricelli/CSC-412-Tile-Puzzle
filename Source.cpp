@@ -49,11 +49,10 @@ struct node
 	int heuristic;
 	vector<string> path;
 
-
-	bool operator() (const node &x, const node &y)
+	bool operator < (const node &other) const
 	{
-
-		return x.heuristic > y.heuristic;
+		
+		return heuristic > other.heuristic;
 
 	}
 
@@ -74,8 +73,8 @@ int puzzle[SIZE] = { 0 };
 string goalState = "123456780";
 string initialState = "0";
 string workingState;
-int finalNodeCount;
-int finalDepth;
+int finalNodeCount = 0;
+int finalDepth = 0;
 
 
 // Map used to store the visited states in order to prevent duplicates
@@ -89,6 +88,8 @@ bool breadthFirstSearch();
 bool depthFirstSearch();
 bool misplacedTiles();
 bool manhattanDistance();
+int getMisplacedTiles(string);
+int getManhattanDistance(string);
 
 
 // Main driver function
@@ -214,7 +215,7 @@ int main()
 			}
 			else
 			{
-
+				
 				// Starts the timer
 				auto startTimer = std::chrono::high_resolution_clock::now();
 
@@ -555,8 +556,6 @@ bool breadthFirstSearch()
 	start.path = tempVector;
 	start.path.push_back(start.stateString);
 
-	finalDepth = currentDepth;
-	finalNodeCount = currentNodeCount;
 
 	// Pushes the start state to the queue
 	myQueue.push(start);
@@ -998,6 +997,10 @@ bool breadthFirstSearch()
 
 		} while (counter != possibleMoves);
 
+
+		finalDepth = currentDepth;
+		finalNodeCount = currentNodeCount;
+
 	}
 
 	found = false;
@@ -1036,9 +1039,6 @@ bool depthFirstSearch()
 	start.stateString = initialState;
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
-
-	finalDepth = currentDepth;
-	finalNodeCount = currentNodeCount;
 
 	// Pushes the start state to the stack
 	myStack.push(start);
@@ -1452,15 +1452,16 @@ bool depthFirstSearch()
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
 
-				finalDepth = currentDepth;
-				finalNodeCount = currentNodeCount;
-
 				// Pushes the new state to the stack
 				myStack.push(temp);
 
 			}
 
 		} while (counter != possibleMoves);
+
+
+		finalDepth = currentDepth;
+		finalNodeCount = currentNodeCount;
 
 	}
 
@@ -1482,7 +1483,6 @@ bool misplacedTiles()
 	int currentNodeCount = 1;
 	int currentDepth = 0;
 	int possibleMoves = 0;
-	int misplacedTiles = 0;
 	string savedWorkingState;
 	vector <string> tempVector;
 	bool found = false;
@@ -1493,7 +1493,7 @@ bool misplacedTiles()
 
 
 	// Creates a queue to hold the nodes
-	priority_queue <node, vector<node>, node> myPriorityQueue;
+	priority_queue <node> myPriorityQueue;
 
 	// Creates a new node
 	node start;
@@ -1502,25 +1502,7 @@ bool misplacedTiles()
 	start.stateString = initialState;
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
-	
-	finalDepth = currentDepth;
-	finalNodeCount = currentNodeCount;
-
-	// For loop used to calculate the number of misplaced tiles
-	for (int i = 0; i < SIZE; i++)
-	{
-
-		if (start.stateString[i] != goalState[i])
-		{
-
-			misplacedTiles++;
-
-		}
-
-	}
-
-	// Stores the rest of the state information in the struct
-	start.heuristic = (misplacedTiles + currentDepth);
+	start.heuristic = (getMisplacedTiles(initialState) + currentDepth);
 	start.path = tempVector;
 	start.path.push_back(start.stateString);
 
@@ -1952,25 +1934,7 @@ bool misplacedTiles()
 				temp.stateString = workingState;
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
-
-				finalDepth = currentDepth;
-				finalNodeCount = currentNodeCount;
-
-				// For loop used to calculate the number of misplaced tiles
-				for (int i = 0; i < SIZE; i++)
-				{
-
-					if (temp.stateString[i] != goalState[i])
-					{
-
-						misplacedTiles++;
-
-					}
-
-				}
-
-				// Stores the rest of the state information in the struct
-				temp.heuristic = (misplacedTiles + currentDepth);
+				temp.heuristic = (getMisplacedTiles(workingState) + currentDepth);
 				temp.path = tempVector;
 				temp.path.push_back(temp.stateString);
 
@@ -1980,6 +1944,10 @@ bool misplacedTiles()
 			}
 
 		} while (counter != possibleMoves);
+
+
+		finalDepth = currentDepth;
+		finalNodeCount = currentNodeCount;
 
 	}
 
@@ -2001,7 +1969,6 @@ bool manhattanDistance()
 	int currentNodeCount = 1;
 	int currentDepth = 0;
 	int possibleMoves = 0;
-	int manhattanDistance = 0;
 	string savedWorkingState;
 	vector <string> tempVector;
 	bool found = false;
@@ -2012,7 +1979,7 @@ bool manhattanDistance()
 
 
 	// Creates a queue to hold the nodes
-	priority_queue <node, vector<node>, node> myPriorityQueue;
+	priority_queue <node> myPriorityQueue;
 
 	// Creates a new node
 	node start;
@@ -2021,26 +1988,7 @@ bool manhattanDistance()
 	start.stateString = initialState;
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
-
-	finalDepth = currentDepth;
-	finalNodeCount = currentNodeCount;
-
-	// For loop used to calculate the Manhattan distance
-	for (int i = 0; i < SIZE; i++)
-	{
-
-		for (int j = i + 1; j < SIZE; j++)
-		{
-
-			manhattanDistance += (abs(start.stateString[i] - start.stateString[j])
-				+ abs(goalState[i] - goalState[j]));
-
-		}
-
-	}
-
-	// Stores the rest of the state information in the struct
-	start.heuristic = (manhattanDistance + currentDepth);
+	start.heuristic = (getManhattanDistance(initialState) + currentDepth);
 	start.path = tempVector;
 	start.path.push_back(start.stateString);
 
@@ -2467,32 +2415,11 @@ bool manhattanDistance()
 				// Creates a new node
 				node temp;
 
-
 				// Stores all the new state information in the struct
 				temp.stateString = workingState;
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
-
-				finalDepth = currentDepth;
-				finalNodeCount = currentNodeCount;
-
-				// For loop used to calculate the Manhattan distance
-				for (int i = 0; i < SIZE; i++)
-				{
-
-					for (int j = i + 1; j < SIZE; j++)
-					{
-
-						manhattanDistance += (abs(start.stateString[i] - start.stateString[j])
-							+ abs(goalState[i] - goalState[j]));
-
-					}
-
-				}
-
-
-				// Stores the rest of the state information in the struct
-				temp.heuristic = (manhattanDistance + currentDepth);
+				temp.heuristic = (getManhattanDistance(workingState) + currentDepth);
 				temp.path = tempVector;
 				temp.path.push_back(temp.stateString);
 
@@ -2510,3 +2437,58 @@ bool manhattanDistance()
 	return false;
 
 } // End of manhattanDistance function
+
+
+
+// Function used to calculate the number of misplaced tiles
+int getMisplacedTiles(string myString)
+{
+
+
+	// Function variable
+	int misplacedTiles = 0;
+
+	// For loop used to calculate the number of misplaced tiles
+	for (int i = 0; i < SIZE; i++)
+	{
+
+		if (myString[i] != goalState[i])
+		{
+
+			misplacedTiles++;
+
+		}
+
+	}
+
+	return misplacedTiles;
+
+}
+
+
+
+// Function used to calculate the Manhattan distance
+int getManhattanDistance(string myString)
+{
+
+
+	// Function variable
+	int manhattanDistance = 0;
+
+	// For loop used to calculate the Manhattan distance
+	for (int i = 0; i < SIZE; i++)
+	{
+
+		for (int j = i + 1; j < SIZE; j++)
+		{
+
+			manhattanDistance += (abs(myString[i] - myString[j])
+				+ abs(goalState[i] - goalState[j]));
+
+		}
+
+	}
+
+	return manhattanDistance;
+
+}
