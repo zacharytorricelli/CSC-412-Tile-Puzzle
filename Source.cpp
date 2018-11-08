@@ -74,6 +74,8 @@ int puzzle[SIZE] = { 0 };
 string goalState = "123456780";
 string initialState = "0";
 string workingState;
+int finalNodeCount;
+int finalDepth;
 
 
 // Map used to store the visited states in order to prevent duplicates
@@ -123,7 +125,7 @@ int main()
 
 			cin.clear();
 			cin.ignore(numeric_limits<streamsize>::max(), '\n');
-			cout << endl << "Please enter a number (1-5)." << endl << endl;
+			cout << endl << "Please enter a number (1-7)." << endl << endl;
 			cin >> choice;
 
 		}
@@ -156,20 +158,40 @@ int main()
 				cout << "Please generate a puzzle first!" << endl;
 
 			}
-
 			else
 			{
+
+				// Starts the timer
+				auto startTimer = std::chrono::high_resolution_clock::now();
+
 				cout << "Loading . . . Please wait" << endl << endl;
 
 				if (breadthFirstSearch() == true)
 				{
 
-				}
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
+
+				}
 				else
 				{
 
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
+					cout << "1. \t" << initialState << endl << endl;
+
+					// Displays the depth and node count to the console
+					cout << "Depth: " << finalDepth << endl;
+					cout << "Nodes: " << finalNodeCount << endl;
+
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 				}
 
@@ -190,21 +212,40 @@ int main()
 				cout << "Please generate a puzzle first!" << endl;
 
 			}
-
 			else
 			{
+
+				// Starts the timer
+				auto startTimer = std::chrono::high_resolution_clock::now();
 
 				cout << "Loading . . . Please wait" << endl << endl;
 
 				if (depthFirstSearch() == true)
 				{
 
-				}
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
+					
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
+				}
 				else
 				{
 
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
+					cout << "1. \t" << initialState << endl;
+
+					// Displays the depth and node count to the console
+					cout << "Depth: " << finalDepth << endl;
+					cout << "Nodes: " << finalNodeCount << endl;
+
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 				}
 
@@ -225,20 +266,40 @@ int main()
 				cout << "Please generate a puzzle first!" << endl;
 
 			}
-
 			else
 			{
+
+				// Starts the timer
+				auto startTimer = std::chrono::high_resolution_clock::now();
+
 				cout << "Loading . . . Please wait" << endl << endl;
 
 				if (misplacedTiles() == true)
 				{
+					
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
+
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 				}
-
 				else
 				{
 
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
+					cout << "1. \t" << initialState << endl;
+
+					// Displays the depth and node count to the console
+					cout << "Depth: " << finalDepth << endl;
+					cout << "Nodes: " << finalNodeCount << endl;
+
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 				}
 
@@ -259,20 +320,40 @@ int main()
 				cout << "Please generate a puzzle first!" << endl;
 
 			}
-
 			else
 			{
+
+				// Starts the timer
+				auto startTimer = std::chrono::high_resolution_clock::now();
+
 				cout << "Loading . . . Please wait" << endl << endl;
 
 				if (manhattanDistance() == true)
 				{
 
-				}
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
+
+				}
 				else
 				{
 
+					// Stops the timer
+					auto finishTimer = std::chrono::high_resolution_clock::now();
 					cout << "No solution was found" << endl;
+					cout << "1. \t" << initialState << endl;
+
+					// Displays the depth and node count to the console
+					cout << "Depth: " << finalDepth << endl;
+					cout << "Nodes: " << finalNodeCount << endl;
+
+					// Calculates the total time elapsed and displays it to the console
+					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
+					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 				}
 
@@ -290,6 +371,7 @@ int main()
 
 		// Default case will collect the invalid options input and let the user try again
 		default:
+			
 			system("CLS");
 			cout << "Invalid selection. Try again" << endl;
 
@@ -445,9 +527,6 @@ string randomPuzzle()
 bool breadthFirstSearch()
 {
 	
-	// Starts the timer
-	auto startTimer = std::chrono::high_resolution_clock::now();
-	
 
 	// Function local variables
 	int index = 0;
@@ -476,6 +555,8 @@ bool breadthFirstSearch()
 	start.path = tempVector;
 	start.path.push_back(start.stateString);
 
+	finalDepth = currentDepth;
+	finalNodeCount = currentNodeCount;
 
 	// Pushes the start state to the queue
 	myQueue.push(start);
@@ -504,10 +585,7 @@ bool breadthFirstSearch()
 		if (workingState == goalState)
 		{
 
-			// Stops the timer
-			auto finishTimer = std::chrono::high_resolution_clock::now();
-
-
+			
 			// Displays a breadth first search label to the console
 			cout << "  Breadth First Search" << endl;
 
@@ -531,10 +609,6 @@ bool breadthFirstSearch()
 			// Displays the depth and node count to the console
 			cout << endl << "Depth: " << currentDepth << endl;
 			cout << "Nodes: " << currentNodeCount << endl;
-
-			// Calculates the total time elapsed and displays it to the console
-			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
-			cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 
 			found = true;
@@ -914,6 +988,9 @@ bool breadthFirstSearch()
 				temp.path = tempVector;
 				temp.path.push_back(temp.stateString);
 
+				finalDepth = currentDepth;
+				finalNodeCount = currentNodeCount;
+
 				// Pushes the new state to the queue
 				myQueue.push(temp);
 
@@ -934,9 +1011,6 @@ bool breadthFirstSearch()
 // Function to perform the depth first search
 bool depthFirstSearch()
 {
-
-	// Starts the timer
-	auto startTimer = std::chrono::high_resolution_clock::now();
 
 
 	// Function local variables
@@ -962,7 +1036,9 @@ bool depthFirstSearch()
 	start.stateString = initialState;
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
-	
+
+	finalDepth = currentDepth;
+	finalNodeCount = currentNodeCount;
 
 	// Pushes the start state to the stack
 	myStack.push(start);
@@ -991,9 +1067,6 @@ bool depthFirstSearch()
 		if (workingState == goalState)
 		{
 
-			// Stops the timer
-			auto finishTimer = std::chrono::high_resolution_clock::now();
-
 
 			// Displays a breadth first search label to the console
 			cout << "  Depth First Search" << endl << endl;
@@ -1002,10 +1075,6 @@ bool depthFirstSearch()
 			// Displays the depth and node count to the console
 			cout << "Depth: " << currentDepth << endl;
 			cout << "Nodes: " << currentNodeCount << endl;
-
-			// Calculates the total time elapsed and displays it to the console
-			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
-			cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 
 			found = true;
@@ -1383,6 +1452,8 @@ bool depthFirstSearch()
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
 
+				finalDepth = currentDepth;
+				finalNodeCount = currentNodeCount;
 
 				// Pushes the new state to the stack
 				myStack.push(temp);
@@ -1404,9 +1475,6 @@ bool depthFirstSearch()
 // Function to perform the A* search using the number of misplaced tiles
 bool misplacedTiles()
 {
-
-	// Starts the timer
-	auto startTimer = std::chrono::high_resolution_clock::now();
 
 
 	// Function local variables
@@ -1435,6 +1503,8 @@ bool misplacedTiles()
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
 	
+	finalDepth = currentDepth;
+	finalNodeCount = currentNodeCount;
 
 	// For loop used to calculate the number of misplaced tiles
 	for (int i = 0; i < SIZE; i++)
@@ -1482,9 +1552,6 @@ bool misplacedTiles()
 		if (workingState == goalState)
 		{
 
-			// Stops the timer
-			auto finishTimer = std::chrono::high_resolution_clock::now();
-
 
 			// Displays a breadth first search label to the console
 			cout << "  A* Search using Number of Misplaced Tiles" << endl;
@@ -1509,10 +1576,6 @@ bool misplacedTiles()
 			// Displays the depth and node count to the console
 			cout << endl << "Depth: " << currentDepth << endl;
 			cout << "Nodes: " << currentNodeCount << endl;
-
-			// Calculates the total time elapsed and displays it to the console
-			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
-			cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 
 			found = true;
@@ -1890,6 +1953,9 @@ bool misplacedTiles()
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
 
+				finalDepth = currentDepth;
+				finalNodeCount = currentNodeCount;
+
 				// For loop used to calculate the number of misplaced tiles
 				for (int i = 0; i < SIZE; i++)
 				{
@@ -1929,9 +1995,6 @@ bool misplacedTiles()
 bool manhattanDistance()
 {
 
-	// Starts the timer
-	auto startTimer = std::chrono::high_resolution_clock::now();
-
 
 	// Function local variables
 	int index = 0;
@@ -1959,6 +2022,8 @@ bool manhattanDistance()
 	start.nodeCount = currentNodeCount;
 	start.depth = currentDepth;
 
+	finalDepth = currentDepth;
+	finalNodeCount = currentNodeCount;
 
 	// For loop used to calculate the Manhattan distance
 	for (int i = 0; i < SIZE; i++)
@@ -2007,9 +2072,6 @@ bool manhattanDistance()
 		if (workingState == goalState)
 		{
 
-			// Stops the timer
-			auto finishTimer = std::chrono::high_resolution_clock::now();
-
 
 			// Displays a breadth first search label to the console
 			cout << "  A* Search using Manhattan Distance" << endl;
@@ -2034,10 +2096,6 @@ bool manhattanDistance()
 			// Displays the depth and node count to the console
 			cout << endl << "Depth: " << currentDepth << endl;
 			cout << "Nodes: " << currentNodeCount << endl;
-
-			// Calculates the total time elapsed and displays it to the console
-			auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
-			cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
 
 			found = true;
@@ -2414,6 +2472,9 @@ bool manhattanDistance()
 				temp.stateString = workingState;
 				temp.nodeCount = currentNodeCount;
 				temp.depth = currentDepth;
+
+				finalDepth = currentDepth;
+				finalNodeCount = currentNodeCount;
 
 				// For loop used to calculate the Manhattan distance
 				for (int i = 0; i < SIZE; i++)
