@@ -11,3 +11,5 @@ a tile can only move up, down, left, or right (no diagonal moves), and a tile ca
 2. Depth First Search
 3. A* using the number of misplaced tiles
 4. A* using the "Manhattan Distance"
+
+(Probably should have put each search in its own .cpp and .h file)
