@@ -73,8 +73,8 @@ int puzzle[SIZE] = { 0 };
 string goalState = "123456780";
 string initialState = "0";
 string workingState;
-int finalNodeCount = 0;
 int finalDepth = 0;
+int finalNodeCount = 0;
 
 
 // Map used to store the visited states in order to prevent duplicates
@@ -90,6 +90,7 @@ bool misplacedTiles();
 bool manhattanDistance();
 int getMisplacedTiles(string);
 int getManhattanDistance(string);
+void getIndex(string, char, int&, int&);
 
 
 // Main driver function
@@ -99,7 +100,7 @@ int main()
 	// Main function variable
 	int choice = 7;
 	
-
+	
 	// Displays a welcome message to the console
 	cout << "Welcome to Zac's 8-piece Tile Puzzle Solver!" << endl;
 	cout << "Please enter a number (1-7)." << endl << endl;
@@ -193,6 +194,7 @@ int main()
 					// Calculates the total time elapsed and displays it to the console
 					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
 					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
+
 
 				}
 
@@ -589,7 +591,7 @@ bool breadthFirstSearch()
 			cout << "  Breadth First Search" << endl;
 
 
-			int numberLabel = 1;
+			int numberLabel = 0;
 
 
 			// For loop used to display the path to the console
@@ -986,9 +988,6 @@ bool breadthFirstSearch()
 				temp.depth = currentDepth;
 				temp.path = tempVector;
 				temp.path.push_back(temp.stateString);
-
-				finalDepth = currentDepth;
-				finalNodeCount = currentNodeCount;
 
 				// Pushes the new state to the queue
 				myQueue.push(temp);
@@ -1539,7 +1538,7 @@ bool misplacedTiles()
 			cout << "  A* Search using Number of Misplaced Tiles" << endl;
 
 
-			int numberLabel = 1;
+			int numberLabel = 0;
 
 
 			// For loop used to display the path to the console
@@ -2025,7 +2024,7 @@ bool manhattanDistance()
 			cout << "  A* Search using Manhattan Distance" << endl;
 
 
-			int numberLabel = 1;
+			int numberLabel = 0;
 
 
 			// For loop used to display the path to the console
@@ -2430,6 +2429,10 @@ bool manhattanDistance()
 
 		} while (counter != possibleMoves);
 
+
+		finalDepth = currentDepth;
+		finalNodeCount = currentNodeCount;
+
 	}
 
 	found = false;
@@ -2463,7 +2466,7 @@ int getMisplacedTiles(string myString)
 
 	return misplacedTiles;
 
-}
+} // End of getMisplacedTiles function
 
 
 
@@ -2472,23 +2475,127 @@ int getManhattanDistance(string myString)
 {
 
 
-	// Function variable
+	// Function variables
 	int manhattanDistance = 0;
+	int puzzleRow = 0;
+	int puzzleColumn = 0;
+	int goalRow = 0;
+	int goalColumn = 0;
+
+
 
 	// For loop used to calculate the Manhattan distance
 	for (int i = 0; i < SIZE; i++)
 	{
 
-		for (int j = i + 1; j < SIZE; j++)
-		{
+		getIndex(myString, goalState[i], puzzleRow, puzzleColumn);
+		getIndex(goalState, goalState[i], goalRow, goalColumn);
 
-			manhattanDistance += (abs(myString[i] - myString[j])
-				+ abs(goalState[i] - goalState[j]));
 
-		}
+		manhattanDistance += abs((puzzleRow - goalRow)) + 
+			abs((puzzleColumn - goalColumn));
 
 	}
 
 	return manhattanDistance;
 
-}
+} // End of getManhattanDistance function
+
+
+
+// Function used to find the indexes for the Manhattan distance
+void getIndex(string myString, char myChar, int &currentRow, int &currentColumn)
+
+{
+
+	
+	// For loop used to get the indexes 
+	for (int i = 0; i < SIZE; i++)
+	{
+		
+
+		if (myString[i] == myChar)
+		{
+
+			switch (i)
+			{
+
+			// Row 0, Column 0
+			case 0:
+
+				currentRow = 0;
+				currentColumn = 0;
+
+				break;
+
+			// Row 0, Column 1
+			case 1:
+
+				currentRow = 0;
+				currentColumn = 1;
+
+				break;
+
+			// Row 0, Column 2
+			case 2:
+
+				currentRow = 0;
+				currentColumn = 2;
+
+				break;
+
+			// Row 1, Column 0
+			case 3:
+
+				currentRow = 1;
+				currentColumn = 0;
+
+				break;
+
+			// Row 1, Column 1
+			case 4:
+
+				currentRow = 1;
+				currentColumn = 1;
+
+				break;
+
+			// Row 1, Column 2
+			case 5:
+
+				currentRow = 1;
+				currentColumn = 2;
+
+				break;
+
+			// Row 2, Column 0
+			case 6:
+
+				currentRow = 2;
+				currentColumn = 0;
+
+				break;
+
+			// Row 2, Column 1
+			case 7:
+
+				currentRow = 2;
+				currentColumn = 1;
+
+				break;
+
+			// Row 2, Column 2
+			case 8:
+
+				currentRow = 2;
+				currentColumn = 2;
+
+				break;
+
+			}
+
+		}
+
+	}
+
+} // End of getIndex function
