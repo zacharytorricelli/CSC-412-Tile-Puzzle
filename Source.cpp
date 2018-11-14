@@ -195,6 +195,8 @@ int main()
 					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
 					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
+					// Clears the map
+					myMap.clear();
 
 				}
 
@@ -250,6 +252,9 @@ int main()
 					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
 					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
+					// Clears the map
+					myMap.clear();
+
 				}
 
 			}
@@ -304,6 +309,9 @@ int main()
 					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
 					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
 
+					// Clears the map
+					myMap.clear();
+
 				}
 
 			}
@@ -357,6 +365,9 @@ int main()
 					// Calculates the total time elapsed and displays it to the console
 					auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(finishTimer - startTimer);
 					cout << "Search Time: " << microseconds.count() << " microseconds" << endl << endl;
+
+					// Clears the map
+					myMap.clear();
 
 				}
 
@@ -617,7 +628,7 @@ bool breadthFirstSearch()
 			// Clears the map
 			myMap.clear();
 	
-			return true;
+			return found;
 
 			break;
 
@@ -1004,7 +1015,7 @@ bool breadthFirstSearch()
 
 	found = false;
 	
-	return false;
+	return found;
 
 } // End of breadthFirstSearch function
 
@@ -1081,7 +1092,7 @@ bool depthFirstSearch()
 			// Clears the map
 			myMap.clear();
 
-			return true;
+			return found;
 
 			break;
 
@@ -1466,7 +1477,7 @@ bool depthFirstSearch()
 
 	found = false;
 
-	return false;
+	return found;
 
 } // End of depthFirstSearch function
 
@@ -1564,7 +1575,7 @@ bool misplacedTiles()
 			// Clears the map
 			myMap.clear();
 
-			return true;
+			return found;
 
 			break;
 
@@ -1950,9 +1961,10 @@ bool misplacedTiles()
 
 	}
 
+
 	found = false;
 
-	return false;
+	return found;
 
 } // End of misplacedTiles function
 
@@ -2050,7 +2062,7 @@ bool manhattanDistance()
 			// Clears the map
 			myMap.clear();
 
-			return true;
+			return found;
 
 			break;
 
@@ -2437,7 +2449,7 @@ bool manhattanDistance()
 
 	found = false;
 
-	return false;
+	return found;
 
 } // End of manhattanDistance function
 
